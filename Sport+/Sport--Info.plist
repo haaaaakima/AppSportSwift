@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>IntegralCF-Bold.otf</string>
+		<string>IntegralCF-BoldOblique.otf</string>
+		<string>IntegralCF-DemiBold.otf</string>
+		<string>IntegralCF-DemiBoldOblique.otf</string>
+		<string>IntegralCF-ExtraBold.otf</string>
+		<string>IntegralCF-ExtraBoldOblique.otf</string>
+		<string>IntegralCF-Heavy.otf</string>
+		<string>IntegralCF-HeavyOblique.otf</string>
+		<string>IntegralCF-Medium.otf</string>
+		<string>IntegralCF-MediumOblique.otf</string>
+		<string>IntegralCF-Regular.otf</string>
+		<string>IntegralCF-RegularOblique.otf</string>
+	</array>
+</dict>
+</plist>
