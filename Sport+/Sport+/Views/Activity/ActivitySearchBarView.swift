@@ -15,7 +15,7 @@ struct ActivitySearchBarView: View {
                 .resizable()
                 .frame(width: 15, height: 15)
                 .foregroundStyle(.searchBar)
-            TextField("", text: $viewModel.searchBySport, prompt: Text("Recherche un type de sport").foregroundStyle(.searchBar))
+            TextField("", text: $viewModel.searchBySport, prompt: Text("Rechercher un sport").foregroundStyle(.searchBar))
         }
         .padding(10)
         .foregroundStyle(.white)

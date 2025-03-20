@@ -34,89 +34,118 @@ struct ActivityEditView: View {
             backColor
                 .ignoresSafeArea()
             
-            VStack{
-                // MARK: - TITRE
-                Text("ACTIVITE")
-                    .font(.custom("IntegralCF-HeavyOblique", size: 24))
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Modifier une activité")
+                    .font(.custom("IntegralCF-MediumOblique", size: 20))
                     .foregroundStyle(.white)
+                    .padding(.top, 20)
+                    .padding(.horizontal, 16)
                 
-                // MARK: - TYPE SPORT PICKER
-                HStack{
-                    Section(header: Text("Category")) {
-                        Picker("Select a category", selection: $selectedCategory) {
-                            ForEach(Sport.allCases, id: \.self) { category in
-                                Text(category.rawValue)
-                                    .tag(category)
-                            }}
-                    }.foregroundStyle(.blue)
-                        .background(.white)
-                }
+                Spacer()
                 
-                //                // MARK: - DATE PICKER
-                Section() {
-                    DatePicker("Select a date", selection: $publishDate, displayedComponents: [.date, .hourAndMinute])
-                }.foregroundStyle(.gray)
-                    .background(.white)
-                    .padding()
-                
-                //                MARK: - NUMBER OF PARTICIPANT PICKER
-                
-                HStack{
-                    Picker("Nombre de participant", selection: $participant){
-                        ForEach(1...20, id: \.self) {
-                            number in
-                            Text("\(number)")
-                            
-                        }
-                    }.pickerStyle(WheelPickerStyle())
-                        .background(.gray)
-                    
-                }
-                
-                
-                // MARK: - TEXTFIELD
-                TextField("Lieu", text: $lieu)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                TextField("Description", text: $description)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                //MARK: - BUTTON
-                
-//              MARK: - MODIFIER
-                Button(action: {
-                    activity.sportType = selectedCategory
-                    activity.date = publishDate
-                    activity.cityActivity = lieu
-                    activity.numberOfParticipant = participant
-                    activity.activityDescription = description
-                    
-                    viewModel.updateActivity(activity: activity)
-                }, label:{
-                    
-                    Text("MODIFIER")
-                        .foregroundStyle(.black)
-                        .padding()
-                        .background(Color.vert)
-                        .cornerRadius(14)
-                })
-                
-//                MARK: - SUPPRIMER
-                Button(action: {
-                    viewModel.deleteActivity(activity: activity)
-                }, label: {
-                    Text("SUPPRIMER")
+                // Catégorie
+                HStack {
+                    Text("Catégorie")
                         .foregroundStyle(.white)
-                        .padding()
-                        .background(Color.red)
-                        .cornerRadius(14)
-                })
+                    Spacer()
+                    Picker("Select a category", selection: $selectedCategory) {
+                        ForEach(Sport.allCases, id: \.self) { category in
+                            Text(category.rawValue)
+                                .tag(category)
+                        }
+                        .foregroundStyle(.vert)
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .tint(.white)
+                }
+                .padding(.horizontal, 16)
                 
+                // Date de l'activité - améliorer la visibilité
+                HStack {
+                    DatePicker("Date & heure", selection: $publishDate, displayedComponents: [.date, .hourAndMinute])
+                        .tint(.vert)
+                        .foregroundStyle(.white)
+                        .colorScheme(.dark)
+                }
+                .padding(.horizontal, 16)
                 
+                // Nombre de participants
+                HStack {
+                    Text("Nombre de participants")
+                        .foregroundStyle(.white)
+                    Spacer()
+                    Picker("Nombre de participants", selection: $participant){
+                        ForEach(1...20, id: \.self) { number in
+                            Text("\(number)")
+                        }
+                        .foregroundStyle(.vert)
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .tint(.white)
+                }
+                .padding(.horizontal, 16)
+                
+                // Lieu
+                TextField("Lieu", text: $lieu)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color("PurpleContent"))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 16)
+                    .preferredColorScheme(.dark)
+                
+                // Description
+                TextField("Description de l'activité", text: $description)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color("PurpleContent"))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 16)
+                    .preferredColorScheme(.dark)
+                
+                Spacer()
+                
+                // Boutons (centre)
+                VStack(spacing: 16) {
+                    // Bouton Modifier
+                    Button(action: {
+                        activity.sportType = selectedCategory
+                        activity.date = publishDate
+                        activity.cityActivity = lieu
+                        activity.numberOfParticipant = participant
+                        activity.activityDescription = description
+                        
+                        viewModel.updateActivity(activity: activity)
+                    }) {
+                        Text("MODIFIER")
+                            .padding(.vertical, 16)
+                            .font(.custom("IntegralCF-BoldOblique", size: 16))
+                            .frame(width: 365)
+                            .foregroundColor(.black)
+                            .background(.vert)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    
+                    // Bouton Supprimer
+                    Button(action: {
+                        viewModel.deleteActivity(activity: activity)
+                    }) {
+                        Text("SUPPRIMER")
+                            .padding(.vertical, 16)
+                            .font(.custom("IntegralCF-BoldOblique", size: 16))
+                            .frame(width: 365)
+                            .foregroundColor(.white)
+                            .background(.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 16)
             }
+            .padding(.vertical, 10)
         }
+        // Bouton de retour
+        CustomBackButton()
     }
 }
 

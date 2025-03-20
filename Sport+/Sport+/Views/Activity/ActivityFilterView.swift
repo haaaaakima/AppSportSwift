@@ -22,14 +22,14 @@ struct ActivityFilterView: View {
                             } label: {
                                 VStack{
                                     Text("ALL")
-                                        .font(.custom("IntegralCF-Regular" ,size: 20))
+                                        .font(.custom("IntegralCF-Regular", size: 18))
                                         .fontWeight(.bold)
                                         
                                     Text("-")
-                                        .font(.system(size: 25))
+                                        .font(.system(size: 15))
                                         .fontWeight(.bold)
                                 }
-                                .padding(4)
+                                .padding(10)
                                 .foregroundStyle(viewModel.selectedDate == nil ? .purpleContent : .white )
                                 .background(viewModel.selectedDate == nil ? .vert : .purpleContent)
                                 .cornerRadius(10)
@@ -43,7 +43,7 @@ struct ActivityFilterView: View {
                                 } label: {
                                     VStack{
                                         Text("\(eachDate.day)")
-                                            .font(.custom("IntegralCF-Regular" ,size: 25))
+                                            .font(.custom("IntegralCF-Regular" ,size: 18))
                                             .fontWeight(.bold)
                                         Text("\((eachDate.month).prefix(3))")
                                             .font(.system(size: 15))

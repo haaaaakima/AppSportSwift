@@ -16,7 +16,6 @@ struct ActivityCreateView: View {
     @State var description: String = ""
     @State var publishDate: Date = Date()
     
-    // A TRAVAILLER
     @State var selectedCategory: Sport = .course
     
     var backColor: Color = Color("PurpleBackground")
@@ -25,89 +24,104 @@ struct ActivityCreateView: View {
             backColor
                 .ignoresSafeArea()
             
-            VStack{
-                
-                // MARK: - TITRE
-                Text("ACTIVITE")
-                    .font(.custom("IntegralCF-HeavyOblique", size: 24))
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Créer une activité")
+                    .font(.custom("IntegralCF-MediumOblique", size: 20))
                     .foregroundStyle(.white)
+                    .padding(.top, 20)
+                    .padding(.horizontal, 16)
                 
-                // MARK: - TYPE SPORT PICKER
-                HStack{
-                    Section(header: Text("Category")) {
-                        Picker("Select a category", selection: $selectedCategory) {
-                            ForEach(Sport.allCases, id: \.self) { category in
-                                Text(category.rawValue)
-                                    .tag(category)
-                            }}
-                    }.foregroundStyle(.blue)
-                        .background(.white)
-                }
+                Spacer()
                 
-                //                // MARK: - DATE PICKER
-                Section() {
-                    DatePicker("Select a date", selection: $publishDate, displayedComponents: [.date, .hourAndMinute])
-                }.foregroundStyle(.gray)
-                    .background(.white)
-                    .padding()
-                
-                //                MARK: - NUMBER OF PARTICIPANT PICKER
-                
-                HStack{
-                    Picker("Nombre de participant", selection: $participant){
-                        ForEach(1...20, id: \.self) {
-                            number in
-                            Text("\(number)")
-                            
+                // Catégorie
+                HStack {
+                    Text("Catégorie")
+                        .foregroundStyle(.white)
+                    Spacer()
+                    Picker("Select a category", selection: $selectedCategory) {
+                        ForEach(Sport.allCases, id: \.self) { category in
+                            Text(category.rawValue)
+                                .tag(category)
                         }
-                    }.pickerStyle(WheelPickerStyle())
-                        .background(.gray)
-                    
+                        .foregroundStyle(.vert)
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .tint(.white)
                 }
+                .padding(.horizontal, 16)
                 
+                // Date de l'activité - améliorer la visibilité
+                HStack {
+                    DatePicker("Date & heure", selection: $publishDate, displayedComponents: [.date, .hourAndMinute])
+                        .tint(.vert)
+                        .foregroundStyle(.white)
+                        .colorScheme(.dark) // Ceci va rendre le contenu du picker en blanc
+                }
+                .padding(.horizontal, 16)
                 
-                // MARK: - TEXTFIELD
+                // Nombre de participants
+                HStack {
+                    Text("Nombre de participants")
+                        .foregroundStyle(.white)
+                    Spacer()
+                    Picker("Nombre de participants", selection: $participant){
+                        ForEach(1...20, id: \.self) { number in
+                            Text("\(number)")
+                        }
+                        .foregroundStyle(.vert)
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .tint(.white)
+                }
+                .padding(.horizontal, 16)
+                
+                // Lieu
                 TextField("Lieu", text: $lieu)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .foregroundColor(.white)
+                    .background(Color("PurpleContent"))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 16)
+                    .preferredColorScheme(.dark)
                 
-                TextField("Description", text: $description)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                // Description
+                TextField("Description de l'activité", text: $description)
                     .padding()
+                    .foregroundColor(.white)
+                    .background(Color("PurpleContent"))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 16)
+                    .preferredColorScheme(.dark)
                 
-                //MARK: - BUTTON
+                Spacer()
                 
-                Button(action: {
-                    viewModel.addActivity(activity: Activity(name: "", sportType: selectedCategory, date: publishDate, numberOfParticipant: participant, personsRecordedIDs: [], authorID: 1, cityActivity: lieu, activityDescription: description))
-                    
-                    // Reset des informations
-                    publishDate = Date()
-                    lieu  = ""
-                    participant = 1
-                    description = ""
-                    selectedCategory = .course
-                    
-                }, label:{
-                    
-                    Text("CREER")
-                        .foregroundStyle(.black)
-                        .padding()
-                        .background(Color.vert)
-                        .cornerRadius(14)
-                })
-                
-                Text("ANNULER")
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(Color.red)
-                    .cornerRadius(14)
-                
+                // Bouton Créer (centré)
+                HStack {
+                    Button(action: {
+                        viewModel.addActivity(activity: Activity(name: "", sportType: selectedCategory, date: publishDate, numberOfParticipant: participant, personsRecordedIDs: [], authorID: 1, cityActivity: lieu, activityDescription: description))
+                        publishDate = Date()
+                        lieu  = ""
+                        participant = 1
+                        description = ""
+                        selectedCategory = .course
+                    }) {
+                        Text("CREER")
+                            .padding(.vertical, 16)
+                            .font(.custom("IntegralCF-BoldOblique", size: 16))
+                            .frame(width: 365)
+                            .foregroundColor(.black)
+                            .background(.vert)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 16)
             }
+            .padding(.vertical, 10)
         }
     }
 }
 
-// Voir cette partie aussi
 #Preview {
     ActivityCreateView()
 }
